@@ -20,6 +20,7 @@ from pydantic import BaseModel
 
 import config
 import inference
+import download_artifacts
 
 # ---------------------------------------------------------------------------
 # Artifact helpers
@@ -113,6 +114,14 @@ async def startup_event():
     print("=" * 60)
     print("  Accessible Caption Assistant — Starting up")
     print("=" * 60)
+
+    # Download model + tokenizer from HF Hub if not present locally
+    try:
+        model_path, tokenizer_path = download_artifacts.ensure_artifacts()
+        config.MODEL_PATH = model_path
+        config.TOKENIZER_PATH = tokenizer_path
+    except Exception as e:
+        print(f"  ❌ Artifact download failed: {e}")
 
     # Validate config
     warnings = config.validate()
