@@ -347,7 +347,7 @@ def _greedy_decode(img_array: np.ndarray) -> tuple[list[int], float]:
     log_prob_sum = 0.0
 
     for i in range(SEQ_LEN - 1):
-        preds = _caption_model.predict([img_array, seq], verbose=0)
+        preds = _caption_model([img_array, seq], training=False).numpy()
         next_probs = preds[0, i, :]
         next_id = int(np.argmax(next_probs))
         prob = float(next_probs[next_id])
