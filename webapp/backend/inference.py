@@ -29,9 +29,8 @@ try:
 except ImportError:
     Image = None
 
+import config as _config
 from config import (
-    MODEL_PATH,
-    TOKENIZER_PATH,
     IMAGE_SIZE,
     MAX_LEN,
     BEAM_SIZE,
@@ -247,13 +246,13 @@ def load_models() -> dict:
 
         # Load the model with all weights (MobileNetV2 + caption head)
         _caption_model = keras.models.load_model(
-            str(MODEL_PATH), compile=False, safe_mode=False
+            str(_config.MODEL_PATH), compile=False, safe_mode=False
         )
 
         # Restore original Lambda init
         keras.layers.Lambda.__init__ = _orig_init
 
-        print(f"[inference] Model loaded from {MODEL_PATH}")
+        print(f"[inference] Model loaded from {_config.MODEL_PATH}")
         for i, inp in enumerate(_caption_model.inputs):
             print(f"  input[{i}]: name={inp.name}  shape={inp.shape}")
         for i, out in enumerate(_caption_model.outputs):
@@ -266,7 +265,7 @@ def load_models() -> dict:
 
     # --- Tokenizer --------------------------------------------------------
     try:
-        with open(TOKENIZER_PATH, "r") as f:
+        with open(_config.TOKENIZER_PATH, "r") as f:
             tok_json = f.read()
 
         try:
