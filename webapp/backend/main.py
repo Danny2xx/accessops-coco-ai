@@ -26,7 +26,7 @@ import download_artifacts
 # Artifact helpers
 # ---------------------------------------------------------------------------
 _HF_DIR = Path(__file__).parent / "hf_artifacts"
-_ART = _HF_DIR / "artifacts" if (_HF_DIR / "artifacts").exists() else config.PROJECT_ROOT / "artifacts"
+_ART = _HF_DIR / "artifacts"
 
 
 def _safe_read_json(path: Path) -> dict:
