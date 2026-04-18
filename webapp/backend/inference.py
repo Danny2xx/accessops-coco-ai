@@ -139,7 +139,10 @@ _RAG_CONF_THRESH = 0.40   # only apply RAG when confidence < this
 def _load_rag_corpus() -> None:
     """Load pre-computed retrieval candidates from Stage 7 CSV."""
     global _rag_corpus, _rag_ready
-    corpus_path = Path(PROJECT_ROOT) / "artifacts" / "stage7" / "retrieval_candidates_topk.csv"
+    _hf_dir = Path(__file__).parent / "hf_artifacts"
+    corpus_path = _hf_dir / "artifacts" / "stage7" / "retrieval_candidates_topk.csv"
+    if not corpus_path.exists():
+        corpus_path = Path(PROJECT_ROOT) / "artifacts" / "stage7" / "retrieval_candidates_topk.csv"
     if not corpus_path.exists():
         print(f"[rag] Corpus not found at {corpus_path} — RAG disabled")
         return

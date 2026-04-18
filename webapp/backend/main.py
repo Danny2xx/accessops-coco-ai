@@ -25,7 +25,8 @@ import download_artifacts
 # ---------------------------------------------------------------------------
 # Artifact helpers
 # ---------------------------------------------------------------------------
-_ART = config.PROJECT_ROOT / "artifacts"
+_HF_DIR = Path(__file__).parent / "hf_artifacts"
+_ART = _HF_DIR / "artifacts" if (_HF_DIR / "artifacts").exists() else config.PROJECT_ROOT / "artifacts"
 
 
 def _safe_read_json(path: Path) -> dict:
@@ -120,6 +121,10 @@ async def startup_event():
         model_path, tokenizer_path = download_artifacts.ensure_artifacts()
         config.MODEL_PATH = model_path
         config.TOKENIZER_PATH = tokenizer_path
+        # Point policy path to downloaded location
+        policy_path = Path(__file__).parent / "hf_artifacts" / "artifacts" / "final" / "deployment_policy.json"
+        if policy_path.exists():
+            config.POLICY_PATH = policy_path
     except Exception as e:
         print(f"  ❌ Artifact download failed: {e}")
 
