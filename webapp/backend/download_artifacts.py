@@ -28,12 +28,15 @@ def ensure_artifacts() -> tuple[Path, Path]:
     try:
         from huggingface_hub import hf_hub_download
 
+        hf_token = os.getenv("HF_TOKEN") or os.getenv("HUGGING_FACE_HUB_TOKEN") or None
+
         if not model_path.exists():
             print("[download] Downloading model (~376 MB) ...")
             downloaded = hf_hub_download(
                 repo_id=HF_REPO,
                 filename="B2_adamw_5e5.keras",
                 local_dir=str(LOCAL_DIR),
+                token=hf_token,
             )
             print(f"[download] Model saved to {downloaded}")
 
@@ -43,6 +46,7 @@ def ensure_artifacts() -> tuple[Path, Path]:
                 repo_id=HF_REPO,
                 filename="tokenizer.json",
                 local_dir=str(LOCAL_DIR),
+                token=hf_token,
             )
             print(f"[download] Tokenizer saved to {downloaded}")
 
