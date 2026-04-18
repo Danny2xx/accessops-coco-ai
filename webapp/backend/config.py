@@ -22,7 +22,7 @@ load_dotenv(_ENV_FILE)
 # Project root
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(
-    os.getenv("PROJECT_ROOT", str(Path(__file__).resolve().parents[2]))
+    os.getenv("PROJECT_ROOT", str(Path(__file__).resolve().parents[0]))
 )
 
 # ---------------------------------------------------------------------------
