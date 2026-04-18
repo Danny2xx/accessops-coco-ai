@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_BASE from "../api.js";
 import {
   BarChart, Bar, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip,
@@ -46,8 +47,8 @@ export default function BenchmarkPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/metrics/summary").then((r) => r.json()),
-      fetch("/api/policy/reroute").then((r) => r.json()),
+      fetch(`${API_BASE}/metrics/summary`).then((r) => r.json()),
+      fetch(`${API_BASE}/policy/reroute`).then((r) => r.json()),
     ])
       .then(([s, r]) => { setSummary(s); setReroute(r); })
       .catch(() => setFetchErr(true))

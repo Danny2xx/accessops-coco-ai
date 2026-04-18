@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_BASE from "../api.js";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
 } from "recharts";
@@ -36,7 +37,7 @@ export default function ErrorAnalysisPage() {
   const [fetchErr, setFetchErr] = useState(false);
 
   useEffect(() => {
-    fetch("/api/analysis/error")
+    fetch(`${API_BASE}/analysis/error`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => setFetchErr(true))

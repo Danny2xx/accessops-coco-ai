@@ -1,7 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload, Sparkles, ChevronDown, ChevronUp, Info, Clock, Database, ArrowRight } from "lucide-react";
 
-const API = "/api";
+import API_BASE from "../api.js";
+const API = API_BASE;
 
 async function apiPredict(file, useRag = false) {
   const form = new FormData();
