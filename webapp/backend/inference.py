@@ -45,7 +45,13 @@ from config import (
 tf = None
 keras = None
 try:
+    import os as _os
+    _os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")
+    _os.environ.setdefault("TF_ENABLE_ONEDNN_OPTS", "0")
     import tensorflow as _tf
+    # Limit CPU threads to reduce memory overhead
+    _tf.config.threading.set_inter_op_parallelism_threads(1)
+    _tf.config.threading.set_intra_op_parallelism_threads(2)
     tf = _tf
     import keras as _keras
     keras = _keras
