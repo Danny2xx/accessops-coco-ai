@@ -238,7 +238,7 @@ async def predict(file: UploadFile = File(...), use_rag: bool = False):
     decode_method = f"beam_{config.BEAM_SIZE}_lp{config.LENGTH_PENALTY}"
 
     try:
-        result = inference.generate_caption(image_bytes, use_beam=False, use_rag=use_rag)
+        result = inference.generate_caption(image_bytes, use_beam=True, use_rag=use_rag)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Inference error: {e}")
 
